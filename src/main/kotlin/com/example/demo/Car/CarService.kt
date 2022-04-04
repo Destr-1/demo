@@ -22,7 +22,9 @@ class CarService(val carClient: CarClient) {
     }
     fun listCars(): List<Car> = carsList().values.toList()
     val exchangeRate = 0.01
-    var dictRusToEng: MutableMap<String, String> = carClient.getDict()
+//    var dictRusToEng: MutableMap<String, String> = carClient.getDict()
+
+    val dictRusToEng: MutableMap<String, String> by lazy { carClient.getDict() }
 
 
     fun translate(): List<Car> =
