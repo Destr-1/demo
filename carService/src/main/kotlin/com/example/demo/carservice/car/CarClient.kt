@@ -1,4 +1,4 @@
-package com.example.demo.Car
+package com.example.demo.carservice.car
 
 import org.springframework.stereotype.Service
 

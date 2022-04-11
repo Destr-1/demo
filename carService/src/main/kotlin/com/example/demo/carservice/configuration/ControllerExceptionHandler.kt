@@ -1,5 +1,5 @@
 
-package com.example.demo.configuration
+package com.example.demo.carservice.configuration
 
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus

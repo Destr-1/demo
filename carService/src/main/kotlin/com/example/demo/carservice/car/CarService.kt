@@ -1,4 +1,4 @@
-package com.example.demo.Car
+package com.example.demo.carservice.car
 
 import org.springframework.stereotype.Service
 
@@ -9,7 +9,10 @@ class CarService(val carClient: CarClient, val carPriseClient: CarPriseClient) {
     fun getCar(id: Int) = carClient.getCar(id)
 
 
-    fun carAdd(id:Int, name: String, brand: String, carbody: String, petrol100: Double, prise: Int) = carClient.addCar(Car(id, name, brand, carbody, petrol100), prise)
+    fun carAdd(id:Int, name: String, brand: String, carbody: String, petrol100: Double, price: Int)
+        = carClient.addCar(Car(id, name, brand, carbody, petrol100), price)
+        //carPriseClient.putCarsPrise(id, price)
+//    }
 
 
     fun getPriceList(): MutableList<Pair<Car, Int?>> {
@@ -30,11 +33,11 @@ class CarService(val carClient: CarClient, val carPriseClient: CarPriseClient) {
 
     private fun changeCarRusToEng(car: Car): Car {
         // val newPrise: Int = (car.prise * exchangeRate).toInt()
-        val tempId = 0
+
         val newName = dictRusToEng.getOrDefault(car.name, car.name)
         val newBrand = dictRusToEng.getOrDefault(car.brand, car.brand)
         val newCarBody = dictRusToEng.getOrDefault(car.carBody, car.carBody)
-        return Car(tempId, newName, newBrand, newCarBody, car.petrol100)
+        return Car(car.id, newName, newBrand, newCarBody, car.petrol100)
     }
 
     fun search(id:Int, name:String?, brand: String?, carbody: String?, offset: Int, limit: Int) = carClient.search(id, name, brand, carbody, offset, limit)

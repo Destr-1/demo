@@ -1,4 +1,4 @@
-package com.example.demo.configuration
+package com.example.demo.carservice.configuration
 
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean

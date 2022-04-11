@@ -1,8 +1,6 @@
-package com.example.demo.Car
+package com.example.demo.carservice.car
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody
 import org.springframework.web.bind.annotation.*
-import java.awt.print.Pageable
 
 @RestController
 @RequestMapping("/cars")
@@ -32,16 +30,13 @@ class CarsController(private val carService: CarService) {
 
     @PostMapping("/addCar")
     fun carAdd(
-        @RequestBody name: String,
-        @RequestBody brand: String,
-        @RequestBody carBody: String,
-        @RequestBody petrol100: Double,
-        @RequestBody prise: Int
+        @RequestBody car: Car,
+        @RequestParam price: Int
+
     ) =
-        carService.carAdd(0, name, brand, carBody, petrol100, prise)
+        carService.carAdd(0, car.name, car.brand, car.carBody, car.petrol100, price)
 }
 
 
-/*@GetMapping("/listCars")
-    fun translateAndSort(cars: Collection<Car>) = CarService.translateAndSortSeq(cars)*/
+
 
