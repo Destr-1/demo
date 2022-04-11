@@ -22,13 +22,13 @@ class CarsController(private val carService: CarService) {
         @RequestParam offset: Int,
         @RequestParam limit: Int
     ) =
-        carService.search(name, brand, carBody, offset, limit)
+        carService.search(0, name, brand, carBody, offset, limit)
 
     @GetMapping("/translate")
     fun translate() = carService.translate()
 
-    @GetMapping("/priselist")
-    fun getPriseList() = carService.getPriseList()
+    @GetMapping("/pricelist")
+    fun getPriceList() = carService.getPriceList()
 
     @PostMapping("/addCar")
     fun carAdd(
@@ -38,7 +38,7 @@ class CarsController(private val carService: CarService) {
         @RequestBody petrol100: Double,
         @RequestBody prise: Int
     ) =
-        carService.carAdd(name, brand, carBody, petrol100, prise)
+        carService.carAdd(0, name, brand, carBody, petrol100, prise)
 }
 
 
