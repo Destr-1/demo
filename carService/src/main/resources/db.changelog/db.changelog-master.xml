@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<databaseChangeLog
+<databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
         http://www.liquibase.org/xml/ns/dbchangelog-ext.xcd
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">-->
-
-<databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="makeCars" author="Dmitry">
         <sql>
@@ -28,7 +23,7 @@
 
     <changeSet id="fillCars" author="Dmitry">
         <sql>
-            insert into CARS values (1, 'Камри', 'Тойота', 'седан', 13.5);
+            insert into CARS values (1, 'Камри', 'Тойота', 'седан', 131.5);
             insert into CARS values (2, 'Королла', 'Тойота', 'хэтчбек', 8.3);
             insert into CARS values (3, 'Тиида', 'Ниссан', 'седан', 10.0);
             insert into CARS values (4, 'Ларгус', 'Лада', 'универсал', 9.8);

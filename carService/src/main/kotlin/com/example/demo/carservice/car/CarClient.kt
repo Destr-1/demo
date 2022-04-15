@@ -1,23 +1,25 @@
 package com.example.demo.carservice.car
 
+import com.example.demo.carservice.db.CarRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CarClient(val storage: Storage) {
-    //var cars = storage.cars
-    fun getCarsList() = storage.getCarsList()
-    fun getCar(id: Int) = storage.getCarsList()[id]
+class CarClient(private val repository: CarRepository) {
+    fun getCarsList() = repository.getCars()
+    fun getCar(id: Int) = repository.getCar(id)
 
-    fun search(id: Int, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int) =
-        storage.getCarsList().values.asSequence().filter { brand == null || it.brand == brand }
+    fun search(id: Int?, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int) =
+        getCarsList().asSequence()
+            .filter { id == null || it.id == id }
+            .filter { brand == null || it.brand == brand }
             .filter { name == null || it.name == name }.filter { carBody == null || it.carBody == carBody }.drop(offset)
             .take(limit).toList()
 
-    fun addCar(car: Car, price: Int): String = storage.addCar(car, price)
-
-   // fun getCarsPrise() = storage.carsPrise
-
-    fun getDict() = storage.dictRusToEng
-
-
+    fun addCar(car: Car): String {
+        repository.saveCar(car);
+        return "Successful";
+    }
+    fun getDict() = repository.getDictRusToEng()
 }
+
+

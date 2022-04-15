@@ -51,6 +51,8 @@ dependencies {
 
 	testImplementation("io.mockk:mockk:1.10.6")
 
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+
 }
 
 tasks.withType<KotlinCompile> {
