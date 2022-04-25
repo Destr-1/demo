@@ -27,7 +27,7 @@ data class Car(
     @Column(name = "carbody")
     var carBody: String?=null,
     @Column(name = "petrol100")
-    var petrol100: Double=0.0
+    var petrol100: Double?=null
 )
 
 @Table(name = "dictrustoeng")

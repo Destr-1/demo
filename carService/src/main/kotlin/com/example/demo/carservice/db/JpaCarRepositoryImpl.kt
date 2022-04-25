@@ -1,26 +1,16 @@
 package com.example.demo.carservice.db
 
 import com.example.demo.carservice.car.Car
-import org.springframework.context.annotation.Primary
-import org.springframework.data.domain.Example
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
-import org.springframework.data.util.Streamable
-//import org.springframework.http.ContentDisposition.builder
-//import org.springframework.http.codec.ServerSentEvent.builder
+import org.springframework.data.domain.*
 import org.springframework.stereotype.Service
-import org.springframework.web.method.HandlerTypePredicate.builder
-import java.util.stream.Stream.builder
 
 
-@Primary
+
+//@Primary
 @Service
 class JpaCarRepositoryImpl(private val repository: JpaCarRepo, private val repoDict: JpaDictRepo) : CarRepository {
     override fun getCars(): List<Car> {
-//        return repository.findAll(Pageable.ofSize(2)).toList()
           return repository.findAll(PageRequest.of(0, 10 )).toList()
-//        Pageable. unpaged()).toList()
     }
 
 
@@ -45,26 +35,8 @@ class JpaCarRepositoryImpl(private val repository: JpaCarRepo, private val repoD
     }
 
     override fun search(id: Int?, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int):List<Car> {
-
-        var example: Car = Car(id, name, brand, carBody, 10.0)
-//        if(name != null)
-//            example.name=name
-//        if(id != null)
-//            example.id = id
-//        if(brand != null)
-//            example.brand=brand
-//        if(carBody != null)
-//            example.carBody=carBody
-
-//        var example: Car = Car
-//            .builder()
-//            .id(id)
-//            .name(name)
-//            .brand(brand)
-//            .carBody(carBody)
-//            .build()
-
-        return repository.findAll(Example.of(example))
-//        return repository.findAllByNameAndBrand(name, brand)
+        var example = Car(id=id, name=name, brand = brand, carBody=carBody)
+        val matcher = ExampleMatcher.matchingAll().withIgnoreCase()
+        return repository.findAll(Example.of(example, matcher), PageRequest.of(offset, limit)).toList()
     }
 }

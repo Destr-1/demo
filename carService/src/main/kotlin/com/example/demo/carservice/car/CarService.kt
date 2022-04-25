@@ -9,7 +9,7 @@ class CarService(val carClient: CarClient, val carPriceClient: CarPriceClient) {
     fun getCar(id: Int) = carClient.getCar(id)
 
 
-    fun carAdd(name: String, brand: String, carbody: String, petrol100: Double, price: Int): String {
+    fun carAdd(name: String, brand: String, carbody: String, petrol100: Double?, price: Int): String {
         val newId = carClient.getCarsList().size + 1
         carPriceClient.setCarsPrice(newId, price)
         return carClient.addCar(Car(newId, name, brand, carbody, petrol100))

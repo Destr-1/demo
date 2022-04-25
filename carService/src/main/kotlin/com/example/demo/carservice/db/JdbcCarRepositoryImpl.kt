@@ -7,11 +7,53 @@ import org.springframework.jdbc.core.query
 import org.springframework.stereotype.Service
 import java.sql.ResultSet
 
-//@Primary
+@Primary
 @Service
 class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarRepository {
     override fun getCars(): List<Car> {
-        return jdbcTemplate.query("select * from cars limit 3 offset 0") { rs, a ->
+        return jdbcTemplate.query("select * from cars limit 15 offset 0") { rs, a ->
+            rowToCar(rs, a)
+        }
+    }
+
+    override fun search(id: Int?, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int): List<Car> {
+        var query = "select * from cars"
+        var ph = false
+        var parametry = mutableListOf<Any>()
+        var condition = ""
+        if(id != null) {
+            condition = "id=?"
+            parametry.add(id)
+            ph = true
+        }
+        if(name != null) {
+            if(ph)
+                condition += " and "
+            condition += "name=?"
+            parametry.add(name)
+            ph = true
+        }
+        if(brand != null) {
+            if(ph)
+                condition += " and "
+            condition += "brand=?"
+            parametry.add(brand)
+            ph = true
+        }
+        if(carBody != null) {
+            if(ph)
+                condition += " and "
+            condition += "carbody=?"
+            parametry.add(carBody)
+            ph = true
+        }
+        if(ph){
+            query = query + " where " + condition
+        }
+        query += " limit ? offset ?"
+        parametry.add(limit)
+        parametry.add(offset)
+        return jdbcTemplate.query(query, *parametry.toTypedArray()){rs, a ->
             rowToCar(rs, a)
         }
     }
@@ -44,9 +86,6 @@ class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarReposit
         return dict.toMap().toMutableMap()
     }
 
-    override fun search(id: Int?, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int): List<Car> {
-        TODO("Not yet implemented")
-    }
 
     private fun rowToCar(rs: ResultSet, a: Int): Car =
         Car(

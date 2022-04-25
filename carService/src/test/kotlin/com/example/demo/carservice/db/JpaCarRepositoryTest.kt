@@ -38,6 +38,11 @@ internal class JpaCarRepositoryTest {
         assertEquals(6, JpaCarRepositoryImpl(carRepo, dictRepo).getCars().size)
         assertEquals(car, JpaCarRepositoryImpl(carRepo, dictRepo).getCar(6))
     }
+    @Test
+    fun testSearch(){
+        val car = JpaCarRepositoryImpl(carRepo, dictRepo).search(name="Камри", offset = 0, limit = 10, brand = null, carBody = null, id=null)[0]
+        assertEquals(cars[0], car)
+    }
 
 }
 
