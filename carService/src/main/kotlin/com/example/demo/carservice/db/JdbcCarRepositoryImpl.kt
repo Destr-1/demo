@@ -1,6 +1,7 @@
 package com.example.demo.carservice.db
 
 import com.example.demo.carservice.car.Car
+import org.springframework.context.annotation.Primary
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.query
 import org.springframework.stereotype.Service
@@ -10,7 +11,7 @@ import java.sql.ResultSet
 @Service
 class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarRepository {
     override fun getCars(): List<Car> {
-        return jdbcTemplate.query("select * from cars") { rs, a ->
+        return jdbcTemplate.query("select * from cars limit 3 offset 0") { rs, a ->
             rowToCar(rs, a)
         }
     }
@@ -41,6 +42,10 @@ class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarReposit
             Pair<String, String>(rs.getString("nameRus"), rs.getString("nameEng"))
         }
         return dict.toMap().toMutableMap()
+    }
+
+    override fun search(id: Int?, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int): List<Car> {
+        TODO("Not yet implemented")
     }
 
     private fun rowToCar(rs: ResultSet, a: Int): Car =

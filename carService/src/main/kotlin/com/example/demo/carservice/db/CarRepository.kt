@@ -9,5 +9,9 @@ interface CarRepository {
 
     fun saveCar(car: Car)
 
-    fun getDictRusToEng():MutableMap<String, String>
+    fun getDictRusToEng(): MutableMap<String, String>
+
+    fun search(id: Int?, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int):List<Car>
+
+
 }

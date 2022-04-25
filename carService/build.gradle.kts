@@ -21,6 +21,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("com.h2database:h2:2.1.210")
 	implementation("org.liquibase:liquibase-core:4.9.0")
+	implementation("org.projectlombok:lombok:1.18.20")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -52,7 +53,8 @@ dependencies {
 	testImplementation("io.mockk:mockk:1.10.6")
 
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
-
+	implementation("org.springframework:spring-web:5.3.17")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
 }
 
 tasks.withType<KotlinCompile> {
