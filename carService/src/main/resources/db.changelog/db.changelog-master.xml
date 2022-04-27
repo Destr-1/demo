@@ -12,12 +12,13 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
         <sql>
             CREATE TABLE cars
             (
-                car_id    serial      PRIMARY KEY,
-                name      VARCHAR(30) UNIQUE NOT NULL,
+                car_id    INT AUTO_INCREMENT PRIMARY KEY,
+                name      VARCHAR(30) NOT NULL,
                 brand     VARCHAR(30) NOT NULL,
                 carbody   VARCHAR(30) NOT NULL,
                 petrol100 DOUBLE      NOT NULL
             );
+            CREATE SEQUENCE USER_SEQ START WITH 6 INCREMENT BY 1;
         </sql>
     </changeSet>
 

@@ -1,25 +1,16 @@
 package com.example.demo.carservice.car
 
-//import lombok.Builder
-import lombok.AllArgsConstructor
-import lombok.Data
-import lombok.Builder
-import lombok.NoArgsConstructor
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
-@Builder
-@Data
+
 @Table(name = "cars")
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@SequenceGenerator(allocationSize = 1, name = "user_seq", sequenceName = "user_seq")
 data class Car(
     @Id
+    @GeneratedValue(generator = "user_seq")
     @Column(name = "car_id")
-    var id: Int?=null,
+    var id: Int?=0,
     @Column(name = "name")
     var name: String?=null,
     @Column(name = "brand")

@@ -1,6 +1,7 @@
 package com.example.demo.carservice.db
 
 import com.example.demo.carservice.car.Car
+import org.springframework.context.annotation.Primary
 import org.springframework.data.domain.*
 import org.springframework.stereotype.Service
 
@@ -22,7 +23,7 @@ class JpaCarRepositoryImpl(private val repository: JpaCarRepo, private val repoD
     }
 
     override fun saveCar(car: Car) {
-        repository.save(car)
+        val savedCar = repository.save(car)
     }
 
     override fun getDictRusToEng(): MutableMap<String, String> {

@@ -13,7 +13,7 @@ class CarClient(private val repository: CarRepository) {
 
     fun addCar(car: Car): String {
         repository.saveCar(car);
-        return "Successful";
+        return  "Successful";
     }
     fun getDict() = repository.getDictRusToEng()
 }
