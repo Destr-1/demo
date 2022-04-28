@@ -9,16 +9,16 @@ import javax.persistence.*
 data class Car(
     @Id
     @GeneratedValue(generator = "user_seq")
-    @Column(name = "car_id")
-    var id: Int?=0,
+    @Column(name = "id")
+    var id: Int? = 0,
     @Column(name = "name")
-    var name: String?=null,
+    var name: String? = null,
     @Column(name = "brand")
-    var brand: String?=null,
+    var brand: String? = null,
     @Column(name = "carbody")
-    var carBody: String?=null,
+    var carBody: String? = null,
     @Column(name = "petrol100")
-    var petrol100: Double?=null
+    var petrol100: Double? = null
 )
 
 @Table(name = "dictrustoeng")
@@ -26,7 +26,7 @@ data class Car(
 data class Dict(
     @Id
     @Column(name = "namerus")
-    var nameRus: String?=null,
+    var nameRus: String? = null,
     @Column(name = "nameeng")
-    var nameEng: String?=null
+    var nameEng: String? = null
 )

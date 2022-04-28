@@ -13,7 +13,7 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
         <sql>
             CREATE TABLE carsPrice
             (
-                car_id serial PRIMARY KEY,
+                id serial PRIMARY KEY,
                 price  INT NOT NULL
             );
         </sql>

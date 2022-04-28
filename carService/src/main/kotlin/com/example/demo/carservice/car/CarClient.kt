@@ -11,10 +11,10 @@ class CarClient(private val repository: CarRepository) {
     fun search(id: Int?, name: String?, brand: String?, carBody: String?, offset: Int, limit: Int) =
         repository.search(id, name, brand, carBody, offset, limit)
 
-    fun addCar(car: Car): String {
-        repository.saveCar(car);
-        return  "Successful";
+    fun addCar(car: Car): Int {
+        return repository.saveCar(car)
     }
+
     fun getDict() = repository.getDictRusToEng()
 }
 

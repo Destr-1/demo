@@ -10,18 +10,18 @@ class CarService(val carClient: CarClient, val carPriceClient: CarPriceClient) {
 
 
     fun carAdd(name: String, brand: String, carbody: String, petrol100: Double?, price: Int): String {
-        val newId =10 //carClient.getCarsList().size + 1
+        val newId = carClient.addCar(Car(0, name, brand, carbody, petrol100)) //carClient.getCarsList().size + 1
         carPriceClient.setCarsPrice(newId, price)
-        return carClient.addCar(Car(newId, name, brand, carbody, petrol100))
+        return "Successful"
     }
 
-       fun getPriceList(): MutableList<Pair<Car, Int?>> {
-           val carsPrice = mutableListOf<Pair<Car, Int?>>()
-           for (car in carsList()) {
-               carsPrice.add(car to carPriceClient.getCarsPrise()[car.id])
-           }
-           return carsPrice
-       }
+    fun getPriceList(): MutableList<Pair<Car, Int?>> {
+        val carsPrice = mutableListOf<Pair<Car, Int?>>()
+        for (car in carsList()) {
+            carsPrice.add(car to carPriceClient.getCarsPrise()[car.id])
+        }
+        return carsPrice
+    }
 
     val dictRusToEng: MutableMap<String, String> by lazy { carClient.getDict() }
 

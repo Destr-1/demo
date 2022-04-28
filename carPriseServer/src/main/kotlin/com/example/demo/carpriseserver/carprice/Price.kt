@@ -10,7 +10,7 @@ import javax.persistence.Table
 @Entity
 data class Price(
     @Id
-    @Column(name = "car_id")
+    @Column(name = "id")
     val id: Int? = null,
     @Column(name = "price")
     val price: Int? = null
