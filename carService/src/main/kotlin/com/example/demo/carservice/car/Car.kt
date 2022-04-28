@@ -9,7 +9,7 @@ import javax.persistence.*
 data class Car(
     @Id
     @GeneratedValue(generator = "user_seq")
-    @Column(name = "car_id")
+    @Column(name = "id")
     var id: Int?=0,
     @Column(name = "name")
     var name: String?=null,

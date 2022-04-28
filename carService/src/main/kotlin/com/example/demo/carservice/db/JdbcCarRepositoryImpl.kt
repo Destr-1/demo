@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.KeyHolder
 import org.springframework.stereotype.Service
 import java.sql.Connection
 import java.sql.ResultSet
+import java.sql.Statement.RETURN_GENERATED_KEYS
 
 
 @Primary
@@ -64,7 +65,7 @@ class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarReposit
     }
 
     override fun getCar(id: Int): Car {
-        val result = jdbcTemplate.query("select * from cars where car_id = ?", id) { rs, a ->
+        val result = jdbcTemplate.query("select * from cars where id = ?", id) { rs, a ->
             rowToCar(rs, a)
         }
         if (result.isEmpty()) {
@@ -74,12 +75,12 @@ class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarReposit
     }
 
     override fun saveCar(car: Car) {
-        val INSERT_MESSAGE_SQL = "insert into CARS(car_id, name,brand,carbody, petrol100) values (next value for USER_SEQ,?,?,?,?)"
+        val INSERT_MESSAGE_SQL = "insert into CARS(id, name,brand,carbody, petrol100) values (next value for USER_SEQ,?,?,?,?)"
         val keyHolder : KeyHolder = GeneratedKeyHolder()
 
         jdbcTemplate.update({ connection: Connection ->
             val ps = connection
-                .prepareStatement(INSERT_MESSAGE_SQL)
+                .prepareStatement(INSERT_MESSAGE_SQL, RETURN_GENERATED_KEYS)
             ps.setString(1, car.name)
             ps.setString(2, car.brand)
             ps.setString(3, car.carBody)
@@ -90,7 +91,7 @@ class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarReposit
 
 
 //        jdbcTemplate.update(
-//            "insert into CARS(car_id, name,brand,carbody, petrol100) values (?,?,?,?,?)",
+//            "insert into CARS(id, name,brand,carbody, petrol100) values (?,?,?,?,?)",
 //            car.id,
 //            car.name,
 //            car.brand,
@@ -109,7 +110,7 @@ class JdbcCarRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CarReposit
 
     private fun rowToCar(rs: ResultSet, a: Int): Car =
         Car(
-            rs.getInt("car_id"),
+            rs.getInt("id"),
             rs.getString("name"),
             rs.getString("brand"),
             rs.getString("carbody"),

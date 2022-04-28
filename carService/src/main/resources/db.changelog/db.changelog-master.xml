@@ -12,23 +12,23 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
         <sql>
             CREATE TABLE cars
             (
-                car_id    INT AUTO_INCREMENT PRIMARY KEY,
+                id    INT PRIMARY KEY,
                 name      VARCHAR(30) NOT NULL,
                 brand     VARCHAR(30) NOT NULL,
                 carbody   VARCHAR(30) NOT NULL,
                 petrol100 DOUBLE      NOT NULL
             );
-            CREATE SEQUENCE USER_SEQ START WITH 6 INCREMENT BY 1;
+            CREATE SEQUENCE USER_SEQ START WITH 1 INCREMENT BY 1;
         </sql>
     </changeSet>
 
     <changeSet id="fillCars" author="Dmitry">
         <sql>
-            insert into CARS values (1, 'Камри', 'Тойота', 'седан', 131.5);
-            insert into CARS values (2, 'Королла', 'Тойота', 'хэтчбек', 8.3);
-            insert into CARS values (3, 'Тиида', 'Ниссан', 'седан', 10.0);
-            insert into CARS values (4, 'Ларгус', 'Лада', 'универсал', 9.8);
-            insert into CARS values (5, '525', 'БМВ', 'седан', 15.5);
+            insert into CARS(id, name, brand, carbody, petrol100) values (next value for USER_SEQ, 'Камри', 'Тойота', 'седан', 131.5);
+            insert into CARS(id, name, brand, carbody, petrol100) values (next value for USER_SEQ, 'Королла', 'Тойота', 'хэтчбек', 8.3);
+            insert into CARS(id, name, brand, carbody, petrol100) values (next value for USER_SEQ, 'Тиида', 'Ниссан', 'седан', 10.0);
+            insert into CARS(id, name, brand, carbody, petrol100) values (next value for USER_SEQ, 'Ларгус', 'Лада', 'универсал', 9.8);
+            insert into CARS(id, name, brand, carbody, petrol100) values (next value for USER_SEQ, '525', 'БМВ', 'седан', 15.5);
         </sql>
     </changeSet>
 
