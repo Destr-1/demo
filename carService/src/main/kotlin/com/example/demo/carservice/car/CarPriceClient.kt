@@ -1,13 +1,15 @@
 package com.example.demo.carservice.car
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
+import org.springframework.web.client.postForObject
 
 @Service
-class CarPriseClient(private val storage: Storage,
+class CarPriceClient(private val storage: Storage,
                      private val restTemplate: RestTemplate,
                      @Value("\${car.price.address}") private val carPriceAddress: String
                      )
@@ -15,13 +17,12 @@ class CarPriseClient(private val storage: Storage,
     fun getCarsPrise():MutableMap<Int, Int> =
         restTemplate.exchange<MutableMap<Int, Int>>("$carPriceAddress$GET_CAR_PRICE", HttpMethod.GET).body.orEmpty().toMutableMap()
 
-    fun putCarsPrise(id:Int, price:Int){
+    fun setCarsPrice(id:Int, price:Int){
+        val price = Price(id, price)
+        val request = HttpEntity(price)
+        restTemplate.exchange("$carPriceAddress$SET_CAR_PRICE", HttpMethod.POST, request, price.javaClass)
 
-//        restTemplate.exchange("$carPriceAddress$SET_CAR_PRICE", HttpMethod.PUT, )
     }
-
-
-    //fun getCarsPrise() = storage.carsPrise
 }
 
 private const val GET_CAR_PRICE = "/cars/price"

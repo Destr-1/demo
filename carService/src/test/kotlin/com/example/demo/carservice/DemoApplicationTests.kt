@@ -2,6 +2,7 @@ package com.example.demo.carservice
 
 
 import com.example.demo.carservice.car.*
+import com.example.demo.carservice.car.Car
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.ninjasquad.springmockk.MockkBean
@@ -15,11 +16,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON
-import org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActionsDsl
 import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import kotlin.test.assertEquals
@@ -29,22 +28,16 @@ import kotlin.test.assertEquals
 @AutoConfigureMockMvc
 class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, private val objectMapper: ObjectMapper) {
 
-    @MockkBean
-    private lateinit var storage: Storage
 
     @MockkBean
-    private lateinit var carPriseClient: CarPriseClient
+    private lateinit var carPriseClient: CarPriceClient
 
 
     @BeforeEach
     fun startup() {
-
-        every { storage.getCarsList() } returns cars
-        every { storage.dictRusToEng } returns dictRusToEng
-//        every { storage.carsPrice } returns carsPrice
-        every { storage.addCar(any(), any()) } returns "Successful"
-
         every { carPriseClient.getCarsPrise() } returns carsPrice
+        every{ carPriseClient.setCarsPrice(any(), any())} answers { carsPrice[firstArg<Int>().toInt()] = secondArg<Int>().toInt() }
+
 
     }
 
@@ -56,10 +49,10 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
     @Test
     fun `тест на получение списка машин`() {
         val carsList = getListCars()
-        assertEquals(carsList, cars.values.toList())
+        assertEquals(carsList, cars)
 
         for (id in 0 until cars.size) {
-            val car = getCarId(id)
+            val car = getCarId(id+1)
             assertEquals(car, cars[id], "failed with $id")
         }
     }
@@ -69,6 +62,7 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
         val carsListEng = getcarsEng()
         assertEquals(carsListEng, carsEng.values.toList())
     }
+
 
     @Test
     fun `тестирование функции добавления авто`() {
@@ -81,11 +75,7 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
         assertEquals("Successful", status)
     }
 
-    @Test
-    fun `тестирование общения с другим приложением по http для обогащения данных`() {
 
-        assertEquals(carsPrice.size, getPriceList().size)
-    }
 
     private fun getPriceList(): List<Pair<Car, Int?>> =
         mockMvc.get("/cars/pricelist").readResponse()
@@ -112,20 +102,20 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
         .let { if (T::class == String::class) it as T else objectMapper.readValue(it) }
 
 
-    val cars = mutableMapOf(
-        0 to Car(0, "Камри", "Тойота", "седан", 13.5),
-        1 to Car(1, "Королла", "Тойота", "хэтчбек", 8.3),
-        2 to Car(2, "Тиида", "Ниссан", "седан", 10.0),
-        3 to Car(3, "Ларгус", "Лада", "универсал", 9.8),
-        4 to Car(4, "525", "БМВ", "седан", 15.5)
+    val cars = mutableListOf(
+        Car(1, "Камри", "Тойота", "седан", 131.5),
+        Car(2, "Королла", "Тойота", "хэтчбек", 8.3),
+        Car(3, "Тиида", "Ниссан", "седан", 10.0),
+        Car(4, "Ларгус", "Лада", "универсал", 9.8),
+        Car(5, "525", "БМВ", "седан", 15.5)
     )
 
     val carsPrice = mutableMapOf(
-        0 to 2500000,
-        1 to 1500000,
-        2 to 1800000,
-        3 to 1000000,
-        4 to 4500000
+        1 to 2500000,
+        2 to 1500000,
+        3 to 1800000,
+        4 to 1000000,
+        5 to 4500000
     )
 
     val dictRusToEng = mutableMapOf(
@@ -144,11 +134,11 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
     )
 
     val carsEng = mutableMapOf(
-        0 to Car(0, "Camry", "Toyota", "sedan", 13.5),
-        1 to Car(1, "Corolla", "Toyota", "hatchback", 8.3),
-        2 to Car(2, "Tiida", "Nissan", "sedan", 10.0),
-        3 to Car(3, "Largus", "LADA", "universal", 9.8),
-        4 to Car(4, "525", "BMW", "sedan", 15.5)
+        0 to Car(1, "Camry", "Toyota", "sedan", 131.5),
+        1 to Car(2, "Corolla", "Toyota", "hatchback", 8.3),
+        2 to Car(3, "Tiida", "Nissan", "sedan", 10.0),
+        3 to Car(4, "Largus", "LADA", "universal", 9.8),
+        4 to Car(5, "525", "BMW", "sedan", 15.5)
     )
 
 
