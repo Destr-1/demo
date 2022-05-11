@@ -1,6 +1,6 @@
 CREATE TABLE cars
 (
-    car_id    serial PRIMARY KEY,
+    id    serial PRIMARY KEY,
     name      VARCHAR(30) UNIQUE NOT NULL,
     brand     VARCHAR(30) NOT NULL,
     carbody   VARCHAR(30) NOT NULL,

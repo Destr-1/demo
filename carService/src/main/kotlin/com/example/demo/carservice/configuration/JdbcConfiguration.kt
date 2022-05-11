@@ -10,6 +10,7 @@ import javax.sql.DataSource
 @EnableJpaRepositories(basePackages = ["com.example.demo.carservice"])
 class JdbcConfiguration {
 
+
     @Bean
     fun jdbcTemplate(dataSource: DataSource):JdbcTemplate = JdbcTemplate(dataSource)
 }

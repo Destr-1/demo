@@ -1,6 +1,13 @@
 package com.example.demo.carservice.car
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.springframework.cglib.proxy.Dispatcher
 import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.client.awaitBody
 
 @Service
 class CarService(val carClient: CarClient, val carPriceClient: CarPriceClient) {
@@ -10,18 +17,32 @@ class CarService(val carClient: CarClient, val carPriceClient: CarPriceClient) {
 
 
     fun carAdd(name: String, brand: String, carbody: String, petrol100: Double?, price: Int): String {
-        val newId = carClient.addCar(Car(0, name, brand, carbody, petrol100)) //carClient.getCarsList().size + 1
-        carPriceClient.setCarsPrice(newId, price)
+        CoroutineScope(Dispatchers.Default)
+            .launch {
+                val newId = carClient.addCar(Car(0, name, brand, carbody, petrol100)) //carClient.getCarsList().size + 1
+                carPriceClient.setCarsPrice(newId, price)
+            }
         return "Successful"
     }
 
     fun getPriceList(): MutableList<Pair<Car, Int?>> {
-        val carsPrice = mutableListOf<Pair<Car, Int?>>()
-        for (car in carsList()) {
-            carsPrice.add(car to carPriceClient.getCarsPrise()[car.id])
+        val carsPriceList = mutableListOf<Pair<Car, Int?>>()
+//        val carsPrices:MutableMap<Int, Int> = carPriceClient.getCarsPrise()
+        runBlocking {
+            launch {
+                val carsPrices = carPriceClient.getCarsPrise()
+//                    .toFuture()
+//              TODO("Some long job")
+                val prices = carsPrices.awaitBody<MutableMap<String, Int>>()
+//                    .join()
+                for (car in carsList()) {
+                    carsPriceList.add(car to prices[car.id.toString()])
+                }
+            }
         }
-        return carsPrice
+        return carsPriceList
     }
+
 
     val dictRusToEng: MutableMap<String, String> by lazy { carClient.getDict() }
 
