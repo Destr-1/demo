@@ -35,7 +35,7 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
 
     @BeforeEach
     fun startup() {
-        every { carPriseClient.getCarsPrise() } returns carsPrice
+//        every { carPriseClient.getCarsPrise() } returns carsPrice
         every{ carPriseClient.setCarsPrice(any(), any())} answers { carsPrice[firstArg<Int>().toInt()] = secondArg<Int>().toInt() }
 
 
@@ -72,7 +72,7 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
         val petrol100 = 13.0
         val price = 700000
         val status = addCar(name, brand, carBody, petrol100, price)
-        assertEquals("Successful", status)
+        assertEquals("Working...", status)
     }
 
 
@@ -81,7 +81,7 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
         mockMvc.get("/cars/pricelist").readResponse()
 
     private fun getListCars(): List<Car> =
-        mockMvc.get("/cars/listCars").readResponse()
+        mockMvc.get("/cars/list-cars").readResponse()
 
     private fun getCarId(id: Int): Car =
         mockMvc.get("/cars/{id}", id).readResponse()
@@ -92,7 +92,7 @@ class CarServiceTests @Autowired constructor(private val mockMvc: MockMvc, priva
 
     private fun addCar(name: String, brand: String, carBody: String, petrol100: Double, price: Int): String =
         mockMvc.perform(
-            post("/cars/addCar").param("price", price.toString()).contentType(APPLICATION_JSON)
+            post("/cars/add-car").param("price", price.toString()).contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(Car(0, name, brand, carBody, petrol100)))
         ).andExpect(status().isOk).andReturn().response.contentAsString
 

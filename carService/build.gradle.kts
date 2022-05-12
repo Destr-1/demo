@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive")
+	testImplementation( "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
 
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -41,7 +43,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-web" )
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 
 	testImplementation(kotlin("test"))
 	implementation(kotlin("stdlib"))

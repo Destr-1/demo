@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("cars")
 class CarPriceController(private val carPriceClient: CarPriceClnt) {
     @GetMapping("/price")
-    fun carPrice() = carPriceClient.getCarPrice()
+    fun carPrice():MutableMap<Int, Int> {
+        return carPriceClient.getCarPrice()
+    }
 
-    @PostMapping("/setprice")
+    @PostMapping("/set-price")
     fun setCarPrice(
         @RequestBody price: Price
     ) {

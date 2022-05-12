@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/cars")
 class CarsController(private val carService: CarService) {
 
-    @GetMapping("/listCars")
+    @GetMapping("/list-cars")
     fun listCars() = carService.carsList()
 
     @GetMapping("{id}")
@@ -30,7 +30,7 @@ class CarsController(private val carService: CarService) {
     @GetMapping("/pricelist")
     fun getPriceList() = carService.getPriceList()
 
-    @PostMapping("/addCar")
+    @PostMapping("/add-car")
     fun carAdd(
         @RequestBody car: Car,
         @RequestParam price: Int
