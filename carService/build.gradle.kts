@@ -16,11 +16,14 @@ repositories {
 }
 
 dependencies {
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive")
+	testImplementation( "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
 
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("com.h2database:h2:2.1.210")
 	implementation("org.liquibase:liquibase-core:4.9.0")
+	implementation("org.projectlombok:lombok:1.18.20")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -40,7 +43,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-web" )
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 
 	testImplementation(kotlin("test"))
 	implementation(kotlin("stdlib"))
@@ -51,6 +54,9 @@ dependencies {
 
 	testImplementation("io.mockk:mockk:1.10.6")
 
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	implementation("org.springframework:spring-web:5.3.17")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
 }
 
 tasks.withType<KotlinCompile> {

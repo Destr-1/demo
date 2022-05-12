@@ -16,11 +16,42 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.h2database:h2:2.1.210")
+    implementation("org.liquibase:liquibase-core:4.9.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("com.ninja-squad:springmockk:3.1.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    testImplementation("io.mockk:mockk:1.12.3")
+
+
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.springframework.boot:spring-boot-starter-web" )
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    testImplementation(kotlin("test"))
+    implementation(kotlin("stdlib"))
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.2.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.2.0")
+
+    testImplementation("io.mockk:mockk:1.10.6")
+
+    implementation("org.apache.httpcomponents:httpclient:4.5.13")
+
 }
 
 tasks.withType<KotlinCompile> {

@@ -7,8 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate
 import javax.sql.DataSource
 
 @Configuration
-@EnableJpaRepositories(basePackages = ["com.example.demo"])
+@EnableJpaRepositories(basePackages = ["com.example.demo.carservice"])
 class JdbcConfiguration {
+
 
     @Bean
     fun jdbcTemplate(dataSource: DataSource):JdbcTemplate = JdbcTemplate(dataSource)
